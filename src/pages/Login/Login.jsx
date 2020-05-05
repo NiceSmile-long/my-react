@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 //引入antd组件
-import { Form, Input, Button} from 'antd';
+import { Form, Input, Button,message} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 //
 import {reqLogin} from '../../api/index'
@@ -20,7 +20,12 @@ export default class Login extends Component {
   //表单提交且验证通过的回调
   onFinish = async values => {
     let result = await reqLogin(values)
-    console.log(result)
+    const{status,data,msg} = result
+    if(status === 0){
+      message.success('成功了',1)
+    }else{
+      message.error(msg)
+    }
   }
   //判断条件 密码验证器
   pwdValidator = (_,value="") =>{
